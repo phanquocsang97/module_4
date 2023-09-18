@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CalculatorController {
     @Autowired
-    ICalculatorService calculatorService;
+    private ICalculatorService calculatorService;
 
     @GetMapping("/showCalculator")
     public String showForm() {
@@ -25,10 +25,10 @@ public class CalculatorController {
                             @RequestParam String input,
                             Model model) {
         if (numSecond == 0) {
-            model.addAttribute("mess", "Number Format");
+            model.addAttribute("mess", "Number is not valid");
         } else {
-            double total = calculatorService.calculate(numFirst, numSecond, input);
-            model.addAttribute("total", total);
+            String totalCaculation = calculatorService.calculate(numFirst, numSecond, input);
+            model.addAttribute("totalCaculation", totalCaculation);
         }
         return "result";
     }

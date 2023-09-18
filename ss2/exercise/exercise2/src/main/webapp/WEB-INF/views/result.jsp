@@ -15,7 +15,7 @@
 <h1>Calculator</h1>
 <form action="/showResult">
     <input type="number" name="numFirst" placeholder="enter first number">
-    <input type="number" name="numSecond"placeholder="enter second number">
+    <input type="number" name="numSecond" placeholder="enter second number">
     <br>
     <input type="submit" name="input" value="Addition(+)">
     <input type="submit" name="input" value="Subtraction(-)">
@@ -23,9 +23,8 @@
     <input type="submit" name="input" value="Division(/)">
     <p></p>
 </form>
-<h3>Result Division : </h3>
-<c:if test="${total!=null}">
-    <h2>${total}</h2>
+<c:if test="${totalCaculation!=null}">
+    <h2>${totalCaculation}</h2>
 </c:if>
 <c:if test="${mess!=null}">
     <h2>${mess}</h2>

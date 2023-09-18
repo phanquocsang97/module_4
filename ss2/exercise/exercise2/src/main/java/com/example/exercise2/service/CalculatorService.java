@@ -4,23 +4,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CalculatorService implements ICalculatorService{
-    double total = 0;
+    double totalCaculation = 0;
     @Override
-    public double calculate(double numFirst, double numSecond, String input) {
+    public String calculate(double numFirst, double numSecond, String input) {
         switch (input){
             case "Addition(+)":
-                total = numFirst + numSecond;
-                break;
+                totalCaculation = numFirst + numSecond;
+                return "Total Calculation : " + totalCaculation;
             case "Subtraction(-)":
-                total = numFirst - numSecond;
-                break;
+                totalCaculation = numFirst - numSecond;
+                return "Total Calculation : " + totalCaculation;
             case "Multiplication(*)":
-                total = numFirst * numSecond;
-                break;
+                totalCaculation = numFirst * numSecond;
+                return "Total Calculation : " + totalCaculation;
             case "Division(/)":
-                total = numFirst / numSecond;
-                break;
+                totalCaculation = numFirst / numSecond;
+                return "Total Calculation : " + totalCaculation;
+            default:
+                return "Please enter the number !!!";
         }
-        return total;
     }
 }

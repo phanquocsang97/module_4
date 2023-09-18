@@ -22,9 +22,9 @@
         Save
     </button>
 </form>
-<c:if test="${spices != null }">
+<c:if test="${condiment != null }">
     <h3>Your options is : </h3>
-    <c:forEach var="list" items="${spices}">
+    <c:forEach var="list" items="${condiment}">
         ${list}
     </c:forEach>
 </c:if>

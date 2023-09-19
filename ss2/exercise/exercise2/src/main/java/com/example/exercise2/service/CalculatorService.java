@@ -19,7 +19,11 @@ public class CalculatorService implements ICalculatorService{
                 return "Total Calculation : " + totalCaculation;
             case "Division(/)":
                 totalCaculation = numFirst / numSecond;
-                return "Total Calculation : " + totalCaculation;
+                if (numSecond != 0){
+                    return "Total Calculation : " + totalCaculation;
+                }else {
+                    return "Number is not valid";
+                }
             default:
                 return "Please enter the number !!!";
         }

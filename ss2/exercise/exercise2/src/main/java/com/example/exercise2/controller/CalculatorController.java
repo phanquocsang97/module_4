@@ -24,12 +24,8 @@ public class CalculatorController {
                             @RequestParam double numSecond,
                             @RequestParam String input,
                             Model model) {
-        if (numSecond == 0) {
-            model.addAttribute("mess", "Number is not valid");
-        } else {
             String totalCaculation = calculatorService.calculate(numFirst, numSecond, input);
             model.addAttribute("totalCaculation", totalCaculation);
-        }
         return "result";
     }
 }

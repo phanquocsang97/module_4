@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,6 +13,13 @@
     <th>Brand</th>
     <th>Detail</th>
   </tr>
+    <tr th:each="product,status:${showList}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.brand}"></td>
+        <td th:text="${product.detail}"></td>
+    </tr>
 </table>
 </body>
 </html>

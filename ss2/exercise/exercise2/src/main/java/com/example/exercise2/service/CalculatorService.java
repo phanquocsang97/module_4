@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CalculatorService implements ICalculatorService{
-    double totalCaculation = 0;
+    private double totalCaculation = 0;
     @Override
     public String calculate(double numFirst, double numSecond, String input) {
         switch (input){

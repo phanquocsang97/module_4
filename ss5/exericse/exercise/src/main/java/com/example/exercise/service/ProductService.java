@@ -6,20 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
-public class ProductService implements IProductService {
+public class ProductService implements IProductService{
     @Autowired
     private IProductRepository productRepository;
-
     @Override
     public List<Product> findAll() {
         return productRepository.findAll();
     }
 
     @Override
-    public void add(Product product) {
-        productRepository.add(product);
+    public boolean add(Product product) {
+        return productRepository.add(product);
     }
 
     @Override
@@ -28,12 +26,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void remove(Product product) {
-        productRepository.remove(product);
+    public boolean delete(int id) {
+       return productRepository.delete(id);
     }
 
     @Override
-    public void update(Product product) {
-        productRepository.update(product);
+    public boolean update(int id, Product product) {
+        return productRepository.update(id,product);
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -23,7 +23,6 @@
     </a>
 </div>
 <br>
-
 <div class="container">
     <table class="table table-row-cell table-earning" border="1px">
         <tr>
@@ -43,29 +42,26 @@
             <td th:text="${product.brand}"></td>
             <td th:text="${product.detail}"></td>
             <td>
-<!--                    <a th:href="@{/product/delete(id=${product.id})}">-->
-<!--                        <button type="submit" class="btn btn-danger">Delete</button>-->
-<!--                    </a>-->
+<!--                <a th:href="@{/product/delete(id=${product.getId()})}">-->
+<!--                    <button type="submit" class="btn btn-danger">Delete</button>-->
+<!--                </a>-->
                 <a th:href="@{/product/delete/__${product.id}__}">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </a>
-
             </td>
             <td>
-                <a th:href="@{/product/{id}/showFormUpdate(id=${product.getId()})}">
+                <a th:href="@{/product/showFormUpdate/__${product.id}__}">
                     <button type="submit" class="btn btn-primary">Update</button>
                 </a>
             </td>
-            <!--            <td>Show Detail</td>-->
             <td>
-                <a th:href="@{/product/{id}/view(id=${product.getId()})}">
+                <a th:href="@{/product/view/__${product.id}__}">
                     <button type="submit" class="btn btn-primary">Show Detail</button>
                 </a>
             </td>
         </tr>
     </table>
 </div>
-
 <p th:if="${mess}" th:text="${mess}"></p>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

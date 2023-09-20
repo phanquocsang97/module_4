@@ -8,13 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ProductRepository implements IProductRepository{
-    private static  List<Product> productList = new ArrayList<>();
+public class ProductRepository implements IProductRepository {
+    private static List<Product> productList = new ArrayList<>();
+
     static {
-        productList.add(new Product(1,"T-Shirt",1000,"Global Brand","Gucci"));
-        productList.add(new Product(2,"Polo",1200,"Global Brand","Louis Vuitton"));
-        productList.add(new Product(1,"Jacket",1500,"Global Brand","Chanel"));
+        productList.add(new Product(1, "T-Shirt", 1000, "Global Brand", "Gucci"));
+        productList.add(new Product(2, "Polo", 1200, "Global Brand", "Louis Vuitton"));
+        productList.add(new Product(1, "Jacket", 1500, "Global Brand", "Chanel"));
     }
+
     @Override
     public List<Product> findAll() {
         return productList;
@@ -27,20 +29,32 @@ public class ProductRepository implements IProductRepository{
 
     @Override
     public Product findById(int id) {
-        return productList.get(id);
-    }
-
-    @Override
-    public void remove(int id) {
-        productList.remove(id);
-    }
-
-    @Override
-    public void update(Integer id, Product product) {
-        for (int i = 0; i < productList.size(); i++) {
-            if (productList.get(i).getId() == id) {
-                productList.set(id, product);
+        for (Product product : productList) {
+            if (product.getId() == id) {
+                return product;
             }
         }
+        return null;
+    }
+
+    @Override
+    public void remove(Product product) {
+        productList.remove(product);
+    }
+
+    @Override
+    public void update(Product product) {
+        int index = findIndex(product.getId());
+        productList.set(index, product);
+    }
+
+    public int findIndex(int id) {
+        int index = -1;
+        for (int i = 0; i < productList.size(); i++) {
+            if (productList.get(i).getId() == id) {
+                index = i;
+            }
+        }
+        return index;
     }
 }

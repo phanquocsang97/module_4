@@ -13,6 +13,9 @@ public class Blog {
     @Column(columnDefinition = "date")
     private String date;
     private String author;
+    @ManyToOne
+    @JoinColumn(name = "category_id",referencedColumnName = "id")
+    private Category category;
 
     public Blog() {
     }

@@ -3,6 +3,8 @@ package com.example.exercise_app_blog.service;
 import com.example.exercise_app_blog.model.Blog;
 import com.example.exercise_app_blog.repository.IBlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +18,12 @@ public class BlogService implements IBlogService {
     @Override
     public List<Blog> findAll() {
         return blogRepository.findAll();
+    }
+
+    @Override
+    public Page<Blog> findAll(Pageable pageable) {
+
+        return blogRepository.findAll(pageable);
     }
 
     @Override
@@ -56,5 +64,15 @@ public class BlogService implements IBlogService {
     @Override
     public Blog findById(int id) {
         return blogRepository.findById(id).get();
+    }
+
+    @Override
+    public Page<Blog> findAll(Pageable pageable, String name) {
+        return blogRepository.findAllByNameContaining(pageable,name);
+    }
+
+    @Override
+    public Page<Blog> findAllByBlog(Pageable pageable, int idCategory) {
+        return blogRepository.findAllByBlog(pageable,idCategory);
     }
 }

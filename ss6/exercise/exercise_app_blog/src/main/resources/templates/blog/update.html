@@ -16,6 +16,10 @@
                         <div style="text-align: center" class="form-outline mb-4"><h2>Update Blog</h2></div>
                         <form th:object="${blog}" action="/blog/update" method="post">
                             <div class="form-outline mb-4">
+                                <input th:field="*{id}" type="hidden" id="id" name="id"
+                                       class="form-control form-control-lg" required/>
+                            </div>
+                            <div class="form-outline mb-4">
                                 <label class="form-label" for="name">Name Blog</label>
                                 <input th:field="*{name}" type="text" id="name" name="name"
                                        class="form-control form-control-lg" required/>

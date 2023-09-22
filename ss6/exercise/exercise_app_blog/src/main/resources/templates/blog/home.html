@@ -19,24 +19,42 @@
 <h3>Blog List</h3>
 <div style="text-align: center">
     <a th:href="@{/blog/create}">
-        <button type="submit" class="btn btn-primary">Add New Product</button>
+        <button type="submit" class="btn btn-primary">Add New Blog</button>
     </a>
 </div>
 <br>
-<div class="container">
+<!--<div style="text-align: center">-->
+<!--    <form action="/blog">-->
+<!--        <input type="text" name="searchName" placeholder="Search Name">-->
+<!--        <button type="submit" class="btn btn-primary">Search</button>-->
+<!--    </form>-->
+<!--</div>-->
+<div style="position: absolute;right: 8rem">
+    <form class="row g-3" action="/blog">
+        <div class="col-auto">
+            <label for="searchName" class="visually-hidden">Search Name</label>
+            <input type="text" class="form-control" id="searchName" name="searchName" placeholder="Search Name">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Search</button>
+        </div>
+    </form>
+</div>
+<br>
+<div class="container mt-5">
     <table class="table table-row-cell table-earning" border="1px">
         <tr>
-            <td>STT</td>
-            <td>Name</td>
-            <td>Title</td>
-            <td>Content</td>
-            <td>Date</td>
-            <td>Author</td>
-            <td>Delete</td>
-            <td>Update</td>
-            <td>Detail</td>
+            <th>STT</th>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date</th>
+            <th>Author</th>
+            <th>Delete</th>
+            <th>Update</th>
+            <th>Detail</th>
         </tr>
-        <tr th:each="blog,status:${showList}">
+        <tr th:each="blog,status:${blogPage}">
             <td th:text="${status.count}"></td>
             <td th:text="${blog.name}"></td>
             <td th:text="${blog.title}"></td>
@@ -62,6 +80,14 @@
         </tr>
     </table>
 </div>
+<div style="position: absolute;right: 8rem">
+    <a th:href="@{/category}">
+        <button type="submit" class="btn btn-primary">Back to Category</button>
+    </a>
+</div>
+<a th:if="${blogPage.hasPrevious()}" th:href="@{/blog(page=${blogPage.number - 1},searchName=${searchName})}">Previous</a>
+<span th:text="${blogPage.number+1}"></span>/<span th:text="${blogPage.totalPages}"></span>
+<a th:if="${blogPage.hasNext()}" th:href="@{/blog(page=${blogPage.number + 1},searchName=${searchName})}">Next</a>
 <div class="modal" tabindex="-1" id="delete" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">

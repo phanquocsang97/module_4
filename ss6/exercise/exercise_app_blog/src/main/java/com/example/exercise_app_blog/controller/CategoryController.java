@@ -46,7 +46,7 @@ public class CategoryController {
         return "category/update";
     }
     @PostMapping("/updateCategory")
-    public String saveUpdate(@ModelAttribute Category category,
+    public String saveForm(@ModelAttribute Category category,
                              RedirectAttributes redirectAttributes) {
         categoryService.updateCategory(category);
         redirectAttributes.addFlashAttribute("mess", "Update Success!!");

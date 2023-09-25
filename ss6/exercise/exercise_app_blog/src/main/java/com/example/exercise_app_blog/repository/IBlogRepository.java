@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface IBlogRepository extends JpaRepository<Blog,Integer> {
     Page<Blog> findAllByNameContaining(Pageable pageable,String name);
-    @Query(value = "select * from blog b where b.category_id =:category ",nativeQuery = true)
-    Page<Blog> findAllByBlog(Pageable pageable, @Param("category") int category);
+    @Query(value = "select * from blog b where b.category_id =:categoryId ",nativeQuery = true)
+    Page<Blog> findAllByBlog(Pageable pageable, @Param("categoryId") int category);
 
 }

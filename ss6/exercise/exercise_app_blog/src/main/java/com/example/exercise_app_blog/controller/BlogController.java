@@ -61,7 +61,7 @@ public class BlogController {
         return "blog/update";
     }
     @PostMapping("/update")
-    public String saveUpdate(@ModelAttribute Blog blog,
+    public String saveForm(@ModelAttribute Blog blog,
                              RedirectAttributes redirectAttributes) {
         blogService.updateBlog(blog);
         redirectAttributes.addFlashAttribute("mess", "Update Success!!");

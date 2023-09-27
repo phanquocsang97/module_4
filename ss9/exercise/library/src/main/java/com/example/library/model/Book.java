@@ -1,44 +1,51 @@
 package com.example.library.model;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "book")
 public class Book {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_book")
-    private int idBook;
-
-    @Column(name = "name_book")
-    private String nameBook;
-
-    @Column(name = "quantity")
+    private int bookId;
+    private String bookName;
     private int quantity;
 
-    public Book(int idBook, String nameBook, int quantity) {
-        this.idBook = idBook;
-        this.nameBook = nameBook;
-        this.quantity = quantity;
+    public String generateRandomCode() {
+        return String.valueOf((int) (Math.random() * (99999 - 10000 + 1) + 10000));
     }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id",referencedColumnName = "categoryId")
+    private Category category;
 
     public Book() {
     }
 
-    public int getIdBook() {
-        return idBook;
+    public Book(int bookId, String bookName, int quantity, Category category) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.quantity = quantity;
+        this.category = category;
     }
 
-    public void setIdBook(int idBook) {
-        this.idBook = idBook;
+    public int getBookId() {
+        return bookId;
     }
 
-    public String getNameBook() {
-        return nameBook;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
-    public void setNameBook(String nameBook) {
-        this.nameBook = nameBook;
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 
     public int getQuantity() {
@@ -47,5 +54,13 @@ public class Book {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -31,15 +31,18 @@ public class BookController {
     @Autowired
     IOrderDetailService orderDetailService;
     @GetMapping("")
-    public String showList(@RequestParam(defaultValue = "0", required = false) int page, @RequestParam(defaultValue = "", required = false) String searchName, Model model) {
-        Pageable pageable = PageRequest.of(page, 3, Sort.by("book_name").descending());
+    public String showList(@RequestParam(defaultValue = "0", required = false) int page,
+                           @RequestParam(defaultValue = "", required = false) String searchName,
+                           Model model) {
+        Pageable pageable = PageRequest.of(page, 3);
         Page<Book> bookPage = bookService.findAll(pageable, searchName);
         model.addAttribute("searchName", searchName);
         model.addAttribute("bookPage", bookPage);
         return "list";
     }
     @GetMapping("/rent/{id}")
-    public String showRentBook(@PathVariable int id, Model model) {
+    public String showRentBook(@PathVariable int id,
+                               Model model) {
         Book book = bookService.findById(id);
         List<Customer> customers = customerService.findAll();
         String code = book.generateRandomCode();
@@ -49,7 +52,10 @@ public class BookController {
         return "rent";
     }
     @PostMapping("/rent")
-    public String rentBook(RedirectAttributes redirectAttributes, Book book, @RequestParam int customerId, @RequestParam String code) {
+    public String rentBook(RedirectAttributes redirectAttributes,
+                           Book book,
+                           @RequestParam int customerId,
+                           @RequestParam String code) {
         if (orderDetailService.saveOrderDetail(book.getBookId(), Integer.parseInt(code), customerId)) {
             int quantity = book.getQuantity() - 1;
             book.setQuantity(quantity);
@@ -60,7 +66,8 @@ public class BookController {
     }
 
     @GetMapping("/history")
-    public String rentHistory(Model model, @RequestParam(defaultValue = "0", required = false) int page) {
+    public String rentHistory(Model model,
+                              @RequestParam(defaultValue = "0", required = false) int page) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("book_id").ascending());
         Page<OrderDetail> orderDetails = orderDetailService.findAll(pageable);
         model.addAttribute("orderDetail", orderDetails);
@@ -73,7 +80,9 @@ public class BookController {
     }
 
     @PostMapping("/payBack")
-    public String payBookBack(@RequestParam int code, RedirectAttributes redirectAttributes, Model model) {
+    public String payBookBack(@RequestParam int code,
+                              RedirectAttributes redirectAttributes,
+                              Model model) {
         OrderDetail orderDetail = orderDetailService.findByCode(code);
         if (orderDetail != null) {
             int id = orderDetail.getOrderId();

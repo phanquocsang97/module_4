@@ -33,11 +33,11 @@
   <th:block th:each="book,status : ${bookPage}">
     <tr>
       <td th:text="${status.count}"></td>
-      <td th:text="${book.bookName}"></td>
-      <td th:text="${book.quantity}"></td>
+      <td th:text="${book.getBookName()}"></td>
+      <td th:text="${book.getQuantity()}"></td>
       <td th:text="${book.category.getCategoryName()}"></td>
       <td><a th:hidden="${book.quantity<=0}" role="button" class="btn btn-primary"
-             th:href="@{/bookPage/rent/__${book.getBookId()}__}">Rent</a>
+             th:href="@{/library/rent/__${book.getBookId()}__}">Rent</a>
       </td>
     </tr>
   </th:block>

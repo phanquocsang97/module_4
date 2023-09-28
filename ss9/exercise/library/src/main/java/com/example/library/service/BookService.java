@@ -13,7 +13,7 @@ public class BookService implements IBookService{
     IBookRepository bookRepository;
     @Override
     public Page<Book> findAll(Pageable pageable, String searchName) {
-        return bookRepository.findAll(pageable,searchName);
+        return bookRepository.findAll(pageable,"%"+searchName+"%");
     }
 
     @Override

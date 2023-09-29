@@ -14,4 +14,6 @@ public interface IOrderDetailService {
     void deleteOrder(int id);
 
     OrderDetail findByCode(int code);
+    int generateRandomCode();
 }
+

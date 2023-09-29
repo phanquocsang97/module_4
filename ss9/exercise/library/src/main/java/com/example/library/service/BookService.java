@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookService implements IBookService{
     @Autowired
-    IBookRepository bookRepository;
+    private IBookRepository bookRepository;
     @Override
     public Page<Book> findAll(Pageable pageable, String searchName) {
         return bookRepository.findAll(pageable,"%"+searchName+"%");
@@ -24,5 +24,27 @@ public class BookService implements IBookService{
     @Override
     public void update(Book book, int bookId) {
         bookRepository.updateBook(book,bookId);
+    }
+
+    @Override
+    public Book rentBook(int id) {
+        Book book = bookRepository.findById(id).orElse(null);
+        if (book != null && book.getQuantity() > 0) {
+            book.setQuantity(book.getQuantity() - 1);
+            bookRepository.save(book);
+            return book;
+        }
+        return null;
+    }
+
+    @Override
+    public Book payBook(int id) {
+        Book book = bookRepository.findById(id).orElse(null);
+        if (book != null) {
+            book.setQuantity(book.getQuantity() + 1);
+            bookRepository.save(book);
+            return book;
+        }
+        return null;
     }
 }

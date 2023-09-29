@@ -17,6 +17,6 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update book set quantity = :#{#book.quantity} where book_id like :id", nativeQuery = true)
+    @Query(value = "update book set quantity = :#{#book.quantity} where book_id = :id", nativeQuery = true)
     void updateBook(Book book, @Param("id") int bookId);
 }

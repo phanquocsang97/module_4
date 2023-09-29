@@ -10,4 +10,8 @@ public interface IBookService {
     Book findById(int id);
 
     void update(Book book, int bookId);
+    Book rentBook(int id);
+
+    Book payBook(int id);
+
 }

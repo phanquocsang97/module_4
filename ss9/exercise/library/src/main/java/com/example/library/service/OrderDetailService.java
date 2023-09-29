@@ -36,4 +36,12 @@ public class OrderDetailService implements IOrderDetailService{
     public OrderDetail findByCode(int code) {
         return orderDetailRepository.findByCode(code);
     }
+    public int generateRandomCode() {
+        int randomNumber = (int) (Math.random() * (99999 - 10000 + 1) + 10000);
+        OrderDetail orderDetail = orderDetailRepository.findByCode(randomNumber);
+        if (orderDetail != null){
+            return generateRandomCode();
+        }
+        return randomNumber;
+    }
 }

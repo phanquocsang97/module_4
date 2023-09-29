@@ -3,10 +3,7 @@ package com.example.library.controller;
 import com.example.library.model.Book;
 import com.example.library.model.Customer;
 import com.example.library.model.OrderDetail;
-import com.example.library.service.IBookService;
-import com.example.library.service.ICategoryService;
-import com.example.library.service.ICustomerService;
-import com.example.library.service.IOrderDetailService;
+import com.example.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,15 +21,15 @@ import java.util.List;
 @RequestMapping("/library")
 public class BookController {
     @Autowired
-    IBookService bookService;
+    private IBookService bookService;
     @Autowired
-    ICategoryService categoryService;
+    private ICategoryService categoryService;
     @Autowired
-    ICustomerService customerService;
+    private ICustomerService customerService;
     @Autowired
-    IOrderDetailService orderDetailService;
+    private IOrderDetailService orderDetailService;
     @GetMapping("")
-    public String showList(@RequestParam(defaultValue = "0", required = false) int page,
+    public String showListBook(@RequestParam(defaultValue = "0", required = false) int page,
                            @RequestParam(defaultValue = "", required = false) String searchName,
                            Model model) {
         Pageable pageable = PageRequest.of(page, 3);
@@ -45,7 +43,7 @@ public class BookController {
                                Model model) {
         Book book = bookService.findById(id);
         List<Customer> customers = customerService.findAll();
-        String code = book.generateRandomCode();
+        int code = orderDetailService.generateRandomCode();
         model.addAttribute("code", code);
         model.addAttribute("customers", customers);
         model.addAttribute("book", book);
@@ -56,12 +54,12 @@ public class BookController {
                            Book book,
                            @RequestParam int customerId,
                            @RequestParam String code) {
-        if (orderDetailService.saveOrderDetail(book.getBookId(), Integer.parseInt(code), customerId)) {
-            int quantity = book.getQuantity() - 1;
-            book.setQuantity(quantity);
+        book = bookService.rentBook(book.getBookId());
+        if (book != null){
+            orderDetailService.saveOrderDetail(book.getBookId(), Integer.parseInt(code),customerId);
             bookService.update(book, book.getBookId());
         }
-        redirectAttributes.addFlashAttribute("message", "Rent successfully");
+        redirectAttributes.addFlashAttribute("message","rent success!!");
         return "redirect:/library";
     }
 
@@ -82,19 +80,22 @@ public class BookController {
     @PostMapping("/payBack")
     public String payBookBack(@RequestParam int code,
                               RedirectAttributes redirectAttributes,
-                              Model model) {
+                              Model model,
+                              BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "rollback";
+        }
         OrderDetail orderDetail = orderDetailService.findByCode(code);
         if (orderDetail != null) {
             int id = orderDetail.getOrderId();
             orderDetailService.deleteOrder(id);
-            int quantity = orderDetail.getBook().getQuantity() + 1;
-            orderDetail.getBook().setQuantity(quantity);
-            bookService.update(orderDetail.getBook(), orderDetail.getBook().getBookId());
+            bookService.payBook(orderDetail.getBook().getBookId());
             redirectAttributes.addFlashAttribute("message", "Pay back successfully");
             return "redirect:/library";
         }
         model.addAttribute("code", code);
         model.addAttribute("message", "Code not found");
         return "rollback";
+
     }
 }

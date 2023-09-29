@@ -14,9 +14,7 @@ public class Book {
     private String bookName;
     private int quantity;
 
-    public String generateRandomCode() {
-        return String.valueOf((int) (Math.random() * (99999 - 10000 + 1) + 10000));
-    }
+
 
     @ManyToOne
     @JoinColumn(name = "category_id",referencedColumnName = "categoryId")

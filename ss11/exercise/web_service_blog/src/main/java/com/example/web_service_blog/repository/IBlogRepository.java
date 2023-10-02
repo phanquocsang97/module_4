@@ -10,8 +10,15 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IBlogRepository extends JpaRepository<Blog, Integer> {
-        Page<Blog> findAllByNameContaining(Pageable pageable, String name);
-    @Query(value = "select * from blog b where b.category_id =:categoryId ",nativeQuery = true)
+    Page<Blog> findAllByNameContaining(Pageable pageable, String name);
+
+    @Query(value = "select * from blog b where b.category_id =:categoryId ", nativeQuery = true)
     Page<Blog> findAllByBlog(Pageable pageable, @Param("categoryId") int category);
+
     List<Blog> findByCategory_Id(int categoryId);
+
+    @Query(value = "select * from blog b where b.name like:name ", nativeQuery = true)
+    Page<Blog> searchByName(Pageable pageable, @Param("name") String name);
+
+
 }

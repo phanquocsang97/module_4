@@ -28,13 +28,5 @@ public class RestCategoryController {
             return new ResponseEntity<>(categoryList,HttpStatus.OK);
         }
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<List<Blog>> searchBlogByCategory(@PathVariable int id){
-        List<Blog> blogByCategory = blogService.searchBlogByCategory(id);
-        if(blogByCategory.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else {
-            return new ResponseEntity<>(blogByCategory,HttpStatus.OK);
-        }
-    }
+
 }
